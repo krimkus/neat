@@ -27,9 +27,7 @@
     }
 
     @else {
-      &:nth-child(#{$query}) {
-        margin-#{$direction}: 0;
-      }
+      @include nth-child($query, $direction);
     }
   }
 
@@ -56,9 +54,7 @@
       }
 
       @else {
-        &:nth-child(#{nth($query, 1)}) {
-          margin-#{$direction}: 0;
-        }
+        @include nth-child(#{nth($query, 1)}, $direction);
       }
     }
   }
@@ -68,7 +64,12 @@
   }
 }
 
-@mixin nth-omega($nth, $display: block, $direction: right) {
-  @warn "The nth-omega() mixin is deprecated. Please use omega() instead.";
-  @include omega($nth $display, $direction);
+@mixin nth-child($query, $direction) {
+  &:nth-child(#{$query}) {
+    margin-#{$direction}: 0;
+  }
+
+  &:nth-child(#{$query}+1) {
+    clear: $direction;
+  }
 }
